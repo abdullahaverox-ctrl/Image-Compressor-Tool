@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://image-tools.vercel.app/</loc>
+    <loc>https://image-compressor-tool-zeta.vercel.app/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://image-tools.vercel.app/about</loc>
+    <loc>https://image-compressor-tool-zeta.vercel.app/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://image-tools.vercel.app/privacy</loc>
+    <loc>https://image-compressor-tool-zeta.vercel.app/privacy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://image-tools.vercel.app/contact</loc>
+    <loc>https://image-compressor-tool-zeta.vercel.app/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
