@@ -21,6 +21,7 @@
   const savings = document.getElementById("savings");
   const downloadBtn = document.getElementById("download-btn");
   const resetBtn = document.getElementById("reset-btn");
+  const chooseAnotherBtn = document.getElementById("choose-another-btn");
   const fallbackNotice = document.getElementById("fallback-notice");
   const yearEl = document.getElementById("year");
 
@@ -62,6 +63,20 @@
     if (compressedUrl) {
       URL.revokeObjectURL(compressedUrl);
       compressedUrl = null;
+    }
+  }
+
+  function setDownloadEnabled(enabled) {
+    if (enabled) {
+      downloadBtn.classList.remove("is-disabled");
+      downloadBtn.removeAttribute("aria-disabled");
+      downloadBtn.removeAttribute("tabindex");
+    } else {
+      downloadBtn.classList.add("is-disabled");
+      downloadBtn.setAttribute("aria-disabled", "true");
+      downloadBtn.setAttribute("tabindex", "-1");
+      downloadBtn.removeAttribute("href");
+      downloadBtn.removeAttribute("download");
     }
   }
 
@@ -115,6 +130,8 @@
 
     revokeUrls();
     results.hidden = true;
+    fallbackNotice.hidden = true;
+    setDownloadEnabled(false);
 
     try {
       const { img, url } = await loadImage(file);
@@ -205,10 +222,10 @@
       const saved = originalFile.size - finalBlob.size;
       if (saved > 0) {
         const pct = (saved / originalFile.size) * 100;
-        savings.textContent = `${formatBytes(saved)} (${pct.toFixed(1)}%)`;
+        savings.textContent = `${formatBytes(saved)} smaller (${pct.toFixed(1)}%)`;
         savings.classList.add("savings-positive");
       } else {
-        savings.textContent = "0 B (already optimized)";
+        savings.textContent = "No reduction — already optimized";
         savings.classList.remove("savings-positive");
       }
 
@@ -216,10 +233,13 @@
 
       const baseName =
         (originalFile.name || "image").replace(/\.[^.]+$/, "") || "image";
-      downloadBtn.href = compressedUrl;
-      downloadBtn.download = usedFallback
+      const fileName = usedFallback
         ? `${baseName}.${extensionFor(finalMime)}`
         : `${baseName}-compressed.${extensionFor(finalMime)}`;
+
+      downloadBtn.href = compressedUrl;
+      downloadBtn.setAttribute("download", fileName);
+      setDownloadEnabled(true);
 
       results.hidden = false;
     } finally {
@@ -234,13 +254,36 @@
     originalFile = null;
     originalImage = null;
     fileInput.value = "";
+    previewOriginal.removeAttribute("src");
+    previewCompressed.removeAttribute("src");
+    sizeOriginal.textContent = "—";
+    sizeCompressed.textContent = "—";
+    dimOriginal.textContent = "—";
+    savings.textContent = "—";
+    savings.classList.remove("savings-positive");
+    setDownloadEnabled(false);
     controls.hidden = true;
     results.hidden = true;
     fallbackNotice.hidden = true;
     clearError();
   }
 
+  function chooseAnother() {
+    reset();
+    // Defer until after the reset to ensure the value is cleared on all
+    // browsers, so the same file can be selected again and re-trigger change.
+    setTimeout(() => {
+      fileInput.click();
+    }, 0);
+  }
+
   // ---------- Events ----------
+  // Clear the input value on every click so picking the same file again
+  // still fires the `change` event.
+  fileInput.addEventListener("click", () => {
+    fileInput.value = "";
+  });
+
   fileInput.addEventListener("change", (e) => {
     const file = e.target.files && e.target.files[0];
     if (file) handleFile(file);
@@ -274,4 +317,8 @@
 
   compressBtn.addEventListener("click", compressImage);
   resetBtn.addEventListener("click", reset);
+  chooseAnotherBtn.addEventListener("click", chooseAnother);
+
+  // Initialize download button as disabled until a file is ready.
+  setDownloadEnabled(false);
 })();

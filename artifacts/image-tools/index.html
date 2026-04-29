@@ -123,16 +123,26 @@
                   <div><dt>Saved</dt><dd id="savings">—</dd></div>
                 </dl>
                 <div class="notice" id="fallback-notice" hidden>
-                  Already well-compressed — using original file for download.
+                  This image is already well-optimized. Lower the quality slider for more savings, or download the original below.
                 </div>
               </div>
             </div>
 
             <div class="action-row">
               <button class="btn btn-ghost" id="reset-btn" type="button">
+                Reset
+              </button>
+              <button class="btn btn-ghost" id="choose-another-btn" type="button">
                 Choose another image
               </button>
-              <a class="btn btn-primary" id="download-btn" download>
+              <a
+                class="btn btn-primary is-disabled"
+                id="download-btn"
+                role="button"
+                aria-disabled="true"
+                tabindex="-1"
+                download
+              >
                 Download compressed image
               </a>
             </div>
