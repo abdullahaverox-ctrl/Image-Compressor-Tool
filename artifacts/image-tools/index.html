@@ -14,7 +14,7 @@
   <body>
     <header class="site-header">
       <div class="container header-inner">
-        <a href="#" class="logo">
+        <a href="./" class="logo">
           <span class="logo-mark" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="3" width="18" height="18" rx="3"></rect>
@@ -24,9 +24,14 @@
           </span>
           <span>Image Tools</span>
         </a>
-        <nav class="nav">
-          <a href="#tools">Tools</a>
-          <a href="#about">About</a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-nav">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="nav" id="primary-nav">
+          <a href="./" class="is-active">Home</a>
+          <a href="./about.html">About</a>
+          <a href="./privacy.html">Privacy Policy</a>
+          <a href="./contact.html">Contact</a>
         </nav>
       </div>
     </header>
@@ -35,6 +40,7 @@
       <section class="hero">
         <div class="container">
           <h1>Free Online Image Tools</h1>
+          <p class="hero-tagline">Compress, Resize, and Convert Images Instantly</p>
           <p class="hero-sub">
             Quick, private, and free. Everything runs inside your browser — your
             files never leave your device.
@@ -311,6 +317,119 @@
         </div>
       </section>
 
+      <section id="about-website" class="container content-section">
+        <h2>About This Website</h2>
+        <p>
+          Image Tools is a free online toolkit that helps you optimize images
+          right from your web browser. With just a few clicks you can compress
+          large photos, resize them to specific dimensions, and (soon) convert
+          between popular formats such as JPG, PNG, and WebP. There is nothing
+          to install and no account is required.
+        </p>
+        <p>
+          Image optimization matters more than ever. Heavy images slow down
+          websites, eat into mobile data plans, and hurt search engine rankings.
+          Compressing and properly resizing your images can dramatically speed
+          up page loads, improve user experience, and reduce storage costs.
+          Whether you are a blogger preparing photos for a post, an online
+          seller listing products, a designer sharing mockups, or a student
+          attaching images to an assignment, smaller and well-sized images
+          simply work better everywhere.
+        </p>
+        <p>
+          Every tool on this site is <strong>completely free</strong> and runs
+          entirely inside your browser using the HTML5 Canvas API. That means
+          your images are <strong>never uploaded to a server</strong> and we do
+          not store, copy, share, or even see your files. Processing happens
+          locally on your device, so the tools are fast, private, and safe to
+          use even with sensitive or personal photos. There are no watermarks,
+          no signups, no daily limits, and no hidden costs — just simple,
+          reliable image tools that respect your privacy.
+        </p>
+      </section>
+
+      <section id="how-to-use" class="container content-section">
+        <h2>How to Use</h2>
+        <p>Getting started takes only a few seconds:</p>
+        <ol class="steps">
+          <li>
+            <span class="step-num">1</span>
+            <div>
+              <strong>Upload your image.</strong> Click the upload area or drag
+              and drop a JPG, PNG, or WebP file (up to 25&nbsp;MB) into the box.
+            </div>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <div>
+              <strong>Choose a tool.</strong> Use the tab control above to
+              switch between <em>Image Compressor</em>, <em>Image Resizer</em>,
+              and (coming soon) <em>Image Converter</em>. Adjust the settings —
+              quality, dimensions, or format — to fit your needs.
+            </div>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <div>
+              <strong>Download the result.</strong> Preview the output, then
+              click the download button to save the new image to your device.
+              That's it — no signup, no waiting, no uploads.
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section id="faq" class="container content-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <details class="faq-item">
+          <summary>What is image compression?</summary>
+          <p>
+            Image compression is the process of reducing the file size of an
+            image without removing it from your screen or making it
+            unrecognizable. Lossy compression (used for JPG and WebP) removes
+            small visual details that the human eye barely notices in order to
+            shrink the file dramatically. The result is a much lighter image
+            that loads faster on websites, sends faster over email or chat, and
+            takes up less space on your device.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Will image quality reduce?</summary>
+          <p>
+            A small amount of quality loss is normal when using lossy formats
+            like JPG or WebP — that's exactly how they save space. In most cases
+            the difference is invisible at typical viewing sizes. You can
+            control how much quality is preserved with the quality slider in
+            the compressor: higher values keep more detail at the cost of file
+            size. If a particular setting reduces quality too much, just lower
+            the compression and try again.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Is this tool free?</summary>
+          <p>
+            Yes. All tools on Image Tools are 100% free to use, with no signup,
+            no trial period, and no daily limits. There are no watermarks added
+            to your images and no premium tiers — every feature is available to
+            every visitor.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Are images stored or saved?</summary>
+          <p>
+            No. Your images are processed locally inside your web browser using
+            the Canvas API. Files are never uploaded to a server, never stored
+            in any database, and never shared with third parties. Once you
+            close the page, the image is gone from this site entirely. This
+            makes the tools ideal for sensitive or personal photos.
+          </p>
+        </details>
+      </section>
+
       <section id="about" class="container about-section">
         <div class="feature-grid">
           <div class="feature">
@@ -347,7 +466,13 @@
     </main>
 
     <footer class="site-footer">
-      <div class="container">
+      <div class="container footer-inner">
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="./">Home</a>
+          <a href="./about.html">About</a>
+          <a href="./privacy.html">Privacy Policy</a>
+          <a href="./contact.html">Contact</a>
+        </nav>
         <p>© <span id="year"></span> Image Tools. Built with HTML, CSS, and JavaScript.</p>
       </div>
     </footer>

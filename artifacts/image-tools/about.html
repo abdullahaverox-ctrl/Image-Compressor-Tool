@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us — Image Tools</title>
+    <meta name="description" content="Learn about Image Tools — a free, browser-based suite for compressing, resizing, and converting images. No uploads, no signup, 100% private." />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Cpath d='M16 44l10-12 8 9 6-7 8 10H16z' fill='white'/%3E%3Ccircle cx='42' cy='22' r='5' fill='white'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="./" class="logo">
+          <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="3"></rect>
+              <circle cx="9" cy="9" r="1.5" fill="currentColor"></circle>
+              <path d="M21 15l-5-5-7 8"></path>
+            </svg>
+          </span>
+          <span>Image Tools</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-nav">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="nav" id="primary-nav">
+          <a href="./">Home</a>
+          <a href="./about.html" class="is-active">About</a>
+          <a href="./privacy.html">Privacy Policy</a>
+          <a href="./contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <h1>About Us</h1>
+          <p class="hero-sub">A free, private, browser-based image toolkit.</p>
+        </div>
+      </section>
+
+      <section class="container content-section">
+        <p>
+          Welcome to <strong>Image Tools</strong> — a small, focused website
+          built to make everyday image tasks effortless. We provide free online
+          tools that let you compress, resize, and convert images directly in
+          your browser. There is nothing to download, no account to create, and
+          no waiting in queues.
+        </p>
+
+        <h2>Our Mission</h2>
+        <p>
+          We believe that simple, useful tools should be available to everyone
+          without paywalls or privacy trade-offs. Big media files slow down
+          websites, fill up phone storage, and make sharing harder than it
+          needs to be. Our goal is to give you fast, reliable image utilities
+          that fix those problems in seconds.
+        </p>
+
+        <h2>What Makes Us Different</h2>
+        <ul class="bullet-list">
+          <li>
+            <strong>Free forever.</strong> Every feature is available to every
+            visitor with no hidden costs, ads inside the tools, or signup walls.
+          </li>
+          <li>
+            <strong>Privacy first.</strong> Images are processed entirely on
+            your device using the HTML5 Canvas API. Files never leave your
+            browser, are never uploaded to a server, and are never stored.
+          </li>
+          <li>
+            <strong>Lightweight and fast.</strong> The site is built with plain
+            HTML, CSS, and JavaScript so it loads quickly even on slow
+            connections.
+          </li>
+          <li>
+            <strong>Mobile friendly.</strong> Use Image Tools on any device —
+            phone, tablet, or desktop — without losing any features.
+          </li>
+        </ul>
+
+        <h2>Tools We Offer</h2>
+        <ul class="bullet-list">
+          <li><strong>Image Compressor</strong> — shrink JPG, PNG, and WebP files with a quality slider.</li>
+          <li><strong>Image Resizer</strong> — resize images to any width and height with optional aspect-ratio lock.</li>
+          <li><strong>Image Converter</strong> — convert between popular formats (coming soon).</li>
+        </ul>
+
+        <p>
+          Have a feature you'd like us to add? We'd love to hear from you —
+          visit our <a href="./contact.html">Contact</a> page to send us a
+          message.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="./">Home</a>
+          <a href="./about.html">About</a>
+          <a href="./privacy.html">Privacy Policy</a>
+          <a href="./contact.html">Contact</a>
+        </nav>
+        <p>© <span id="year"></span> Image Tools. Built with HTML, CSS, and JavaScript.</p>
+      </div>
+    </footer>
+
+    <script src="./pages.js"></script>
+  </body>
+</html>

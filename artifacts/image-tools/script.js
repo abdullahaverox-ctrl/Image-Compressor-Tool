@@ -27,6 +27,17 @@
 
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
+  // Mobile nav toggle
+  const navToggle = document.getElementById("nav-toggle");
+  const primaryNav = document.getElementById("primary-nav");
+  if (navToggle && primaryNav) {
+    navToggle.addEventListener("click", () => {
+      const isOpen = primaryNav.classList.toggle("is-open");
+      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      navToggle.classList.toggle("is-open", isOpen);
+    });
+  }
+
   let originalFile = null;
   let originalImage = null;
   let originalUrl = null;

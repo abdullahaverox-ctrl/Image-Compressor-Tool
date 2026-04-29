@@ -57,6 +57,14 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        index: path.resolve(import.meta.dirname, "index.html"),
+        about: path.resolve(import.meta.dirname, "about.html"),
+        privacy: path.resolve(import.meta.dirname, "privacy.html"),
+        contact: path.resolve(import.meta.dirname, "contact.html"),
+      },
+    },
   },
   server: {
     port,
