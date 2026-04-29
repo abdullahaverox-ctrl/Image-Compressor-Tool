@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Tools — Free Online Image Compressor</title>
+    <meta name="description" content="Free online image compressor. Reduce JPG, PNG, and WebP file sizes right in your browser. No upload, no signup, 100% private." />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Cpath d='M16 44l10-12 8 9 6-7 8 10H16z' fill='white'/%3E%3Ccircle cx='42' cy='22' r='5' fill='white'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="#" class="logo">
+          <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="3"></rect>
+              <circle cx="9" cy="9" r="1.5" fill="currentColor"></circle>
+              <path d="M21 15l-5-5-7 8"></path>
+            </svg>
+          </span>
+          <span>Image Tools</span>
+        </a>
+        <nav class="nav">
+          <a href="#tools">Tools</a>
+          <a href="#about">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <h1>Free Online Image Tools</h1>
+          <p class="hero-sub">
+            Quick, private, and free. Everything runs inside your browser — your
+            files never leave your device.
+          </p>
+        </div>
+      </section>
+
+      <section id="tools" class="container tools-section">
+        <h2 class="section-title">Image Compressor</h2>
+        <p class="section-desc">
+          Upload a JPG, PNG, or WebP and shrink the file size with the slider.
+        </p>
+
+        <div class="card compressor">
+          <label for="file-input" id="drop-zone" class="drop-zone">
+            <div class="drop-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+            </div>
+            <div class="drop-text">
+              <strong>Click to upload</strong> or drag &amp; drop
+            </div>
+            <div class="drop-hint">JPG, PNG, or WebP · up to 25&nbsp;MB</div>
+            <input
+              id="file-input"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              hidden
+            />
+          </label>
+
+          <div class="error" id="error-msg" role="alert" hidden></div>
+
+          <div class="controls" id="controls" hidden>
+            <div class="control-row">
+              <label for="quality">Quality</label>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="quality"
+                  min="10"
+                  max="100"
+                  step="1"
+                  value="75"
+                />
+                <span class="quality-val" id="quality-val">75%</span>
+              </div>
+            </div>
+
+            <div class="control-row">
+              <label for="format">Output format</label>
+              <select id="format">
+                <option value="image/jpeg">JPEG</option>
+                <option value="image/webp">WebP</option>
+                <option value="image/png">PNG</option>
+              </select>
+            </div>
+
+            <button class="btn btn-primary" id="compress-btn" type="button">
+              Compress image
+            </button>
+          </div>
+
+          <div class="results" id="results" hidden>
+            <div class="preview-grid">
+              <div class="preview-card">
+                <div class="preview-label">Original</div>
+                <div class="preview-image-wrap">
+                  <img id="preview-original" alt="Original preview" />
+                </div>
+                <dl class="preview-meta">
+                  <div><dt>File size</dt><dd id="size-original">—</dd></div>
+                  <div><dt>Dimensions</dt><dd id="dim-original">—</dd></div>
+                </dl>
+              </div>
+
+              <div class="preview-card">
+                <div class="preview-label">Compressed</div>
+                <div class="preview-image-wrap">
+                  <img id="preview-compressed" alt="Compressed preview" />
+                </div>
+                <dl class="preview-meta">
+                  <div><dt>File size</dt><dd id="size-compressed">—</dd></div>
+                  <div><dt>Saved</dt><dd id="savings">—</dd></div>
+                </dl>
+              </div>
+            </div>
+
+            <div class="action-row">
+              <button class="btn btn-ghost" id="reset-btn" type="button">
+                Choose another image
+              </button>
+              <a class="btn btn-primary" id="download-btn" download>
+                Download compressed image
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="container about-section">
+        <div class="feature-grid">
+          <div class="feature">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <h3>100% Private</h3>
+            <p>Files never leave your browser — there's no server upload.</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polyline>
+              </svg>
+            </div>
+            <h3>Instant</h3>
+            <p>Compression happens locally using the Canvas API.</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 12V8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v4"></path>
+                <path d="M2 12h20"></path>
+                <path d="M6 16h.01M10 16h.01"></path>
+              </svg>
+            </div>
+            <h3>Free Forever</h3>
+            <p>No accounts, no limits, no hidden costs.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© <span id="year"></span> Image Tools. Built with HTML, CSS, and JavaScript.</p>
+      </div>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
