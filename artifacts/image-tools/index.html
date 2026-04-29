@@ -79,7 +79,7 @@
                   type="range"
                   id="quality"
                   min="10"
-                  max="100"
+                  max="90"
                   step="1"
                   value="75"
                 />
@@ -92,7 +92,6 @@
               <select id="format">
                 <option value="image/jpeg">JPEG</option>
                 <option value="image/webp">WebP</option>
-                <option value="image/png">PNG</option>
               </select>
             </div>
 
@@ -123,6 +122,9 @@
                   <div><dt>File size</dt><dd id="size-compressed">—</dd></div>
                   <div><dt>Saved</dt><dd id="savings">—</dd></div>
                 </dl>
+                <div class="notice" id="fallback-notice" hidden>
+                  Already well-compressed — using original file for download.
+                </div>
               </div>
             </div>
 

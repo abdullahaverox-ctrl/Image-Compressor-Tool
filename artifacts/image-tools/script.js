@@ -21,6 +21,7 @@
   const savings = document.getElementById("savings");
   const downloadBtn = document.getElementById("download-btn");
   const resetBtn = document.getElementById("reset-btn");
+  const fallbackNotice = document.getElementById("fallback-notice");
   const yearEl = document.getElementById("year");
 
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
@@ -65,15 +66,21 @@
   }
 
   function defaultFormatFor(file) {
-    if (file.type === "image/png") return "image/png";
+    // Always use a lossy format for best compression. PNG ignores the quality
+    // parameter in canvas.toBlob and very often produces larger files.
     if (file.type === "image/webp") return "image/webp";
     return "image/jpeg";
   }
 
   function extensionFor(mime) {
-    if (mime === "image/png") return "png";
     if (mime === "image/webp") return "webp";
     return "jpg";
+  }
+
+  function toBlobAsync(canvas, mime, quality) {
+    return new Promise((resolve) => {
+      canvas.toBlob((blob) => resolve(blob), mime, quality);
+    });
   }
 
   function loadImage(file) {
@@ -129,13 +136,16 @@
   }
 
   // ---------- Compression ----------
-  function compressImage() {
+  async function compressImage() {
     if (!originalImage || !originalFile) return;
 
     clearError();
 
     const mime = formatSelect.value;
-    const quality = Math.max(0.1, Math.min(1, Number(qualityInput.value) / 100));
+    // Clamp quality to a safe lossy range (0.1 - 0.9). 1.0 effectively
+    // disables compression and frequently produces files larger than the input.
+    const rawQuality = Number(qualityInput.value) / 100;
+    const quality = Math.max(0.1, Math.min(0.9, rawQuality));
 
     const canvas = document.createElement("canvas");
     canvas.width = originalImage.naturalWidth;
@@ -159,42 +169,63 @@
     const originalLabel = compressBtn.textContent;
     compressBtn.textContent = "Compressing…";
 
-    canvas.toBlob(
-      (blob) => {
-        compressBtn.disabled = false;
-        compressBtn.textContent = originalLabel;
+    try {
+      let blob = await toBlobAsync(canvas, mime, quality);
 
-        if (!blob) {
-          showError("Compression failed. Try a different format or image.");
-          return;
-        }
+      // Safety net: if encoder still produced something larger than the
+      // original at the chosen quality, retry once at a noticeably lower
+      // quality before giving up and falling back.
+      if (blob && blob.size >= originalFile.size && quality > 0.4) {
+        const retry = await toBlobAsync(
+          canvas,
+          mime,
+          Math.max(0.1, quality - 0.25)
+        );
+        if (retry && retry.size < blob.size) blob = retry;
+      }
 
-        if (compressedUrl) URL.revokeObjectURL(compressedUrl);
-        compressedUrl = URL.createObjectURL(blob);
+      if (!blob) {
+        showError("Compression failed. Try a different format or image.");
+        return;
+      }
 
-        previewCompressed.src = compressedUrl;
-        sizeCompressed.textContent = formatBytes(blob.size);
+      // If the compressed result is not actually smaller, fall back to the
+      // original file so the user never downloads a bigger image than they
+      // started with.
+      const usedFallback = blob.size >= originalFile.size;
+      const finalBlob = usedFallback ? originalFile : blob;
+      const finalMime = usedFallback ? originalFile.type : mime;
 
-        const diff = originalFile.size - blob.size;
-        const pct = (diff / originalFile.size) * 100;
-        if (diff > 0) {
-          savings.textContent = `${formatBytes(diff)} (${pct.toFixed(1)}%)`;
-          savings.classList.add("savings-positive");
-        } else {
-          savings.textContent = `+${formatBytes(Math.abs(diff))} larger`;
-          savings.classList.remove("savings-positive");
-        }
+      if (compressedUrl) URL.revokeObjectURL(compressedUrl);
+      compressedUrl = URL.createObjectURL(finalBlob);
 
-        const baseName =
-          (originalFile.name || "image").replace(/\.[^.]+$/, "") || "image";
-        downloadBtn.href = compressedUrl;
-        downloadBtn.download = `${baseName}-compressed.${extensionFor(mime)}`;
+      previewCompressed.src = compressedUrl;
+      sizeCompressed.textContent = formatBytes(finalBlob.size);
 
-        results.hidden = false;
-      },
-      mime,
-      quality
-    );
+      const saved = originalFile.size - finalBlob.size;
+      if (saved > 0) {
+        const pct = (saved / originalFile.size) * 100;
+        savings.textContent = `${formatBytes(saved)} (${pct.toFixed(1)}%)`;
+        savings.classList.add("savings-positive");
+      } else {
+        savings.textContent = "0 B (already optimized)";
+        savings.classList.remove("savings-positive");
+      }
+
+      fallbackNotice.hidden = !usedFallback;
+
+      const baseName =
+        (originalFile.name || "image").replace(/\.[^.]+$/, "") || "image";
+      downloadBtn.href = compressedUrl;
+      downloadBtn.download = usedFallback
+        ? `${baseName}.${extensionFor(finalMime)}`
+        : `${baseName}-compressed.${extensionFor(finalMime)}`;
+
+      results.hidden = false;
+    } finally {
+      compressBtn.disabled = false;
+      compressBtn.textContent = originalLabel;
+    }
   }
 
   // ---------- Reset ----------
@@ -205,6 +236,7 @@
     fileInput.value = "";
     controls.hidden = true;
     results.hidden = true;
+    fallbackNotice.hidden = true;
     clearError();
   }
 
